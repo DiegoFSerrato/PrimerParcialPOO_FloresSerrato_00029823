@@ -12,4 +12,4 @@ public class TelefonoMovil extends ArticuloElectronico {
     public String getSistemaOperativo() {
         return sistemaOperativo;
     }
-}
+} 
