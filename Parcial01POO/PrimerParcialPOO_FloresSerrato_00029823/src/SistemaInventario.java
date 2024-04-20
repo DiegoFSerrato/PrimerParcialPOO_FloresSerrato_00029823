@@ -25,6 +25,17 @@ public class SistemaInventario {
             System.out.println("Modelo: " + articulo.getModelo());
             System.out.println("Descripción: " + articulo.getDescripcion());
             System.out.println("Precio: $" + articulo.getPrecio());
+
+            if (articulo instanceof Laptop) {
+                // Es una laptop, mostrar el procesador
+                Laptop laptop = (Laptop) articulo;
+                System.out.println("Procesador: " + laptop.getProcesador());
+            } else if (articulo instanceof TelefonoMovil) {
+                // Es un teléfono móvil, mostrar el sistema operativo
+                TelefonoMovil movil = (TelefonoMovil) articulo;
+                System.out.println("Sistema Operativo: " + movil.getSistemaOperativo());
+            }
+
             System.out.println("------------------------------------");
         }
     }
@@ -34,15 +45,16 @@ public class SistemaInventario {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("\n----- Menú Principal -----");
+            System.out.println("\n====| Inventario ElectroMart |====");
+            System.out.println("----- Menú Principal -----");
             System.out.println("1. Agregar Artículo");
             System.out.println("2. Mostrar Lista de Artículos");
-            System.out.println("3. Modificar Modelo de articulo");
+            System.out.println("3. Modificar Precio de articulo");
             System.out.println("4. Salir");
             System.out.print("Seleccione una opción: ");
 
             int opcion = scanner.nextInt();
-            scanner.nextLine(); // Consume newline character
+            scanner.nextLine();
 
             switch (opcion) {
                 case 1:
@@ -54,31 +66,55 @@ public class SistemaInventario {
                     String descripcion = scanner.nextLine();
                     System.out.print("Ingrese el precio del artículo: ");
                     double precio = scanner.nextDouble();
-                    scanner.nextLine(); // Consume newline character
+                    scanner.nextLine();
 
-                    System.out.println("¿Es una laptop o un teléfono móvil? (laptop/movil): ");
-                    String tipoArticulo = scanner.nextLine();
+                    System.out.println("Seleccione el tipo de artículo:");
+                    System.out.println("1. Laptop");
+                    System.out.println("2. Teléfono móvil");
+                    System.out.print("Ingrese la opción (1 o 2): ");
+                    int opcionTipo = scanner.nextInt();
+                    scanner.nextLine();
 
-                    if (tipoArticulo.equalsIgnoreCase("laptop")) {
+                    if (opcionTipo == 1) {
                         System.out.print("Ingrese el procesador de la laptop: ");
                         String procesador = scanner.nextLine();
                         Laptop laptop = new Laptop(nombre, modelo, descripcion, precio, procesador);
                         sistema.agregarArticulo(laptop);
-                    } else if (tipoArticulo.equalsIgnoreCase("movil")) {
+                    } else if (opcionTipo == 2) {
                         System.out.print("Ingrese el sistema operativo del teléfono móvil: ");
                         String sistemaOperativo = scanner.nextLine();
                         TelefonoMovil movil = new TelefonoMovil(nombre, modelo, descripcion, precio, sistemaOperativo);
                         sistema.agregarArticulo(movil);
                     } else {
-                        System.out.println("Tipo de artículo no reconocido.");
+                        System.out.println("Opción inválida. Intente de nuevo.");
                     }
                     break;
 
                 case 2:
                     sistema.mostrarListaArticulos();
                     break;
-
                 case 3:
+                    System.out.println("Modificar Precio de Artículo");
+
+                    System.out.print("Ingrese el número de registro del artículo que desea modificar: ");
+                    int indice = scanner.nextInt();
+                    scanner.nextLine();
+
+                    if (indice >= 1 && indice <= sistema.inventario.size()) {
+                        System.out.print("Ingrese el nuevo precio: ");
+                        double nuevoPrecio = scanner.nextDouble();
+                        scanner.nextLine();
+
+                        // Actualizar el precio del artículo seleccionado
+                        ArticuloElectronico articuloModificar = sistema.inventario.get(indice - 1);
+                        articuloModificar.setPrecio(nuevoPrecio);
+
+                        System.out.println("Precio modificado correctamente.");
+                    } else {
+                        System.out.println("Número de registro inválido. Intente de nuevo.");
+                    }
+                    break;
+                case 4:
                     System.out.println("Saliendo del sistema...");
                     System.exit(0);
                 default:

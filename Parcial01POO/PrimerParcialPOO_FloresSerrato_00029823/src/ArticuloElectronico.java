@@ -13,7 +13,7 @@ public abstract class ArticuloElectronico implements ProductoElectronico {
         this.precio = precio;
     }
 
-    // Getters
+    // Getters y Setters
     public String getNombre() {
         return nombre;
     }
@@ -28,5 +28,9 @@ public abstract class ArticuloElectronico implements ProductoElectronico {
 
     public double getPrecio() {
         return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 }

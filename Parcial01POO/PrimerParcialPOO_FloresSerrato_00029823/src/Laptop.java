@@ -1,4 +1,4 @@
-// Calse Laptop
+// Clase Laptop
 public class Laptop extends ArticuloElectronico {
     private String procesador;
 
